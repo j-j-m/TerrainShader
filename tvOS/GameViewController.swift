@@ -7,24 +7,24 @@
 //
 
 import UIKit
-import SpriteKit
+import SceneKit
 import GameplayKit
 
 class GameViewController: UIViewController {
     
+    var terrainGenerator: TerrainGenerator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let scene = GameScene.newGameScene()
+        let scene = TerrestrialScene()
+        terrainGenerator = TerrainGenerator(scene: scene)
         
         // Present the scene
-        let skView = self.view as! SKView
-        skView.presentScene(scene)
-        
-        skView.ignoresSiblingOrder = true
-        
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+        let sceneView = self.view as! SCNView
+        sceneView.backgroundColor = .black
+        sceneView.isPlaying = true
+        sceneView.scene = scene
     }
     
     override func didReceiveMemoryWarning() {

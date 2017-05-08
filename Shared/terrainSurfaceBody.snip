@@ -1,0 +1,33 @@
+#pragma body
+uniform float Scale = 12.0;
+uniform float Width = 0.25;
+uniform float Blend = 0.3;
+
+
+constexpr sampler sampler2d(coord::normalized, filter::linear, address::repeat);
+
+vec4 p = scn_frame.inverseViewTransform * vec4(_surface.position, 1.0);
+vec2 position = p.xz;
+
+vec4 tc = vec4(snoise(p.xy/300), snoise(p.xy/300), snoise(p.xy/500), 1.0);
+
+vec2 nt = vec2(snoise(p.zx/10343), snoise(p.xy/2517));
+vec2 nt2 = vec2(snoise(p.zx/10345), snoise(p.xy/3500));
+vec2 nt3 = vec2(snoise(p.zx/500), snoise(p.xy/36));
+
+vec4 color1 = rockTexture.sample(sampler2d, nt);
+vec4 color2 = rockTexture.sample(sampler2d, nt2);
+
+vec4 grass1 = grassTexture.sample(sampler2d, p.xz/100);
+vec4 grass2 = grassTexture.sample(sampler2d, p.zx/100);
+
+vec4 color3 = mix(grass1, grass2, snoise(p.xz/89)*2);
+
+vec4 rockDist = mix(color1, color2, snoise(p.xy/10000)*2);
+vec4 grassDist = color3;
+
+vec4 y = 1.0 - p.y/700.0;
+_surface.diffuse = mix(rockDist, grassDist, y);
+
+
+//_surface.diffuse = texture2D(grassTexture, snoise(position/10000));

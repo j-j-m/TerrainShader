@@ -1,0 +1,8 @@
+float dotProduct = dot(_surface.normal,_light.direction);
+
+vec3 halfVector = vec3(dotProduct);
+_lightingContribution.diffuse = _surface.diffuse.rgb*dotProduct;
+
+
+
+

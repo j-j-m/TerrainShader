@@ -17,13 +17,7 @@ class InterfaceController: WKInterfaceController {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        let scene = GameScene.newGameScene()
-        
-        // Present the scene
-        self.skInterface.presentScene(scene)
-        
-        // Use a preferredFramesPerSecond that will maintain consistent frame rate
-        self.skInterface.preferredFramesPerSecond = 30
+
     }
     
     override func willActivate() {

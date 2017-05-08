@@ -7,43 +7,29 @@
 //
 
 import UIKit
-import SpriteKit
+import SceneKit
 import GameplayKit
 
 class GameViewController: UIViewController {
 
+    var terrainGenerator: TerrainGenerator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let scene = GameScene.newGameScene()
-
-        // Present the scene
-        let skView = self.view as! SKView
-        skView.presentScene(scene)
+        let scene = TerrestrialScene()
+        terrainGenerator = TerrainGenerator(scene: scene)
         
-        skView.ignoresSiblingOrder = true
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+        // Present the scene
+        let sceneView = self.view as! SCNView
+        sceneView.showsStatistics = true
+        sceneView.backgroundColor = .black
+        sceneView.isPlaying = true
+        sceneView.scene = scene
     }
-
-    override var shouldAutorotate: Bool {
-        return true
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
-    }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
 }
