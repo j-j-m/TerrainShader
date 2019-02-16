@@ -48,6 +48,10 @@ class TerrestrialScene: SCNScene {
         
         let light = SCNLight()
         light.type = .omni
+        light.zFar = 1000000
+        if #available(OSX 10.13, *) {
+            light.forcesBackFaceCasters = true
+        } 
         light.castsShadow = true
         let lightNode = SCNNode()
         lightNode.light = light
